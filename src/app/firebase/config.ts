@@ -22,9 +22,7 @@ const firebaseConfig: FirebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-const fStore = firebase.firestore();
-const fAuth = firebase.auth();
+export const fStore = firebase.firestore();
+export const fAuth = firebase.auth();
 
-const fTimestamp = firebase.firestore.Timestamp;
-
-export { fStore, fAuth, fTimestamp };
+export const fTimestamp = firebase.firestore.Timestamp;
