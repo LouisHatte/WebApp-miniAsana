@@ -14,9 +14,8 @@ interface OrderBy {
     directionStr?: firebase.firestore.OrderByDirection | undefined;
 }
 
-interface Document {
+interface Document extends firebase.firestore.DocumentData {
     id: string;
-    documentData: firebase.firestore.DocumentData;
 }
 
 type State = {
@@ -24,12 +23,12 @@ type State = {
     error: string | null
 };
 
-export const useCollection = (collection: string, _query: Query, _orderBy: OrderBy): State => {
+export const useCollection = (collection: string, _query?: Query, _orderBy?: OrderBy): State => {
     const [documents, setDocuments] = useState<Document[] | null>(null);
     const [error, setError] = useState<string | null>(null);
 
-    const query: Query = useRef(_query).current;
-    const orderBy: OrderBy = useRef(_orderBy).current;
+    const query = useRef(_query).current;
+    const orderBy = useRef(_orderBy).current;
 
     useEffect(() => {
         let ref: firebase.firestore.Query<firebase.firestore.DocumentData> = fStore.collection(collection);
@@ -44,7 +43,8 @@ export const useCollection = (collection: string, _query: Query, _orderBy: Order
         const unsub = ref.onSnapshot(snapshot => {
             const results: Document[] = [];
             snapshot.docs.forEach(doc => {
-                results.push({ id: doc.id, documentData: doc.data() });
+                doc.data()
+                results.push({ ...doc.data(), id: doc.id });
             });
 
             setDocuments(results);

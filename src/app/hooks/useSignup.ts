@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
-import { fAuth } from "app/firebase/config";
+import { fAuth, fStorage, fStore } from "app/firebase/config";
 import { useAuthContext } from "app/hooks/useAuthContext";
 import { AuthDispatch } from "app/contexts/AuthContext";
 
 interface UseSignup {
     isPending: boolean;
     error: string | null;
-    signup(email: string, password: string, displayName: string): Promise<void>;
+    signup(email: string, password: string, displayName: string, thumbnail: File | null): Promise<void>;
 }
 
 export const useSignup = (): UseSignup => {
@@ -16,18 +16,33 @@ export const useSignup = (): UseSignup => {
     const [error, setError] = useState<string | null>(null);
     const { dispatch }: AuthDispatch = useAuthContext();
 
-    const signup = async (email: string, password: string, displayName: string): Promise<void> => {
+    const signup = async (email: string, password: string, displayName: string, thumbnail: File | null): Promise<void> => {
         setIsPending(true);
         setError(null);
 
         try {
+            if (!thumbnail) {
+                throw new Error('Please provide a thumbnail');
+            }
+
             const res = await fAuth.createUserWithEmailAndPassword(email, password);
 
             if (!res.user) {
                 throw new Error('Could not complete signup');
             }
 
+            const uploadPath = `thumbnails/${res.user.uid}/${thumbnail.name}`;
+            const img = await fStorage.ref(uploadPath).put(thumbnail);
+            const imgUrl = await img.ref.getDownloadURL();
+
+            await res.user.updateProfile({ displayName, photoURL: imgUrl });
             await res.user.updateProfile({ displayName });
+
+            await fStore.collection('users').doc(res.user.uid).set({
+                online: true,
+                displayName,
+                photoURL: imgUrl
+            });
 
             dispatch({ type: 'LOGIN', payload: res.user });
         } catch (err: unknown) {

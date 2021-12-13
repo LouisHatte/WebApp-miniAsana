@@ -1,0 +1,60 @@
+@use 'app/scss/colors';
+@use 'app/scss/mixins';
+
+.Sidebar {
+    width: 300px;
+    min-width: 300px;
+    background: colors.$primary-color;
+    min-height: 100vh;
+    box-sizing: border-box;
+    position: relative;
+    color: #fff;
+
+    .user {
+        font-weight: bold;
+        text-align: center;
+        letter-spacing: 1px;
+        padding: 40px 30px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .links {
+        margin-top: 80px;
+        margin-left: 20px;
+
+        li {
+            margin-top: 10px;
+        }
+
+        a {
+            display: flex;
+            padding: 10px;
+            text-decoration: none;
+            width: 100%;
+            color: #fff;
+            box-sizing: border-box;
+        }
+
+        img {
+            margin-right: 10px;
+            filter: invert(100%);
+        }
+
+        .active {
+            img {
+                filter: invert(40%);
+            }
+
+            @include mixins.unify-parent("a") {
+                color: #555;
+                background: colors.$bg-color;
+                border-radius: 20px 0 0 20px;
+            }
+        }
+    }
+}
+
+.sidebar-content {
+    position: fixed;
+    width: inherit;
+}

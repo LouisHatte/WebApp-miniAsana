@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { fAuth } from "app/firebase/config";
+import { fAuth, fStore } from "app/firebase/config";
 import { useAuthContext } from "app/hooks/useAuthContext";
 import { AuthDispatch } from "app/contexts/AuthContext";
 
@@ -22,6 +22,13 @@ export const useLogin = (): State => {
 
         try {
             const res = await fAuth.signInWithEmailAndPassword(email, password);
+
+            if (!res.user) {
+                throw new Error('User does not exist');
+            }
+            const { uid } = res.user;
+            await fStore.collection('users').doc(uid).update({ online: true });
+
             dispatch({ type: 'LOGIN', payload: res.user });
             if (isCancelled) return;
         } catch (err: unknown) {

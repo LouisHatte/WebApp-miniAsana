@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { fAuth } from "app/firebase/config";
+import { fAuth, fStore } from "app/firebase/config";
 import { useAuthContext } from "app/hooks/useAuthContext";
-import { AuthDispatch } from "app/contexts/AuthContext";
 
 type State = {
     logout: () => Promise<void>,
@@ -14,13 +13,19 @@ export const useLogout = (): State => {
     const [isPending, setIsPending] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [isCancelled, setIsCancelled] = useState<boolean>(false);
-    const { dispatch }: AuthDispatch = useAuthContext();
+    const { dispatch, user } = useAuthContext();
 
     const logout = async () => {
         setIsPending(true);
         setError(null);
 
         try {
+            if (!user) {
+                throw new Error('User does not exist');
+            }
+            const { uid } = user;
+            await fStore.collection('users').doc(uid).update({ online: false });
+
             await fAuth.signOut();
             dispatch({ type: 'LOGOUT' });
             if (isCancelled) return;
@@ -31,7 +36,6 @@ export const useLogout = (): State => {
                 setError(err.message);
             }
         }
-
         setIsPending(false);
     };
 
