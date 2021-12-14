@@ -8,7 +8,7 @@ export interface IUserAssigned {
 
 type ICreatedBy = IUserAssigned
 
-interface IComment {
+export interface IComment {
     id: number;
     displayName: string;
     photoURL: string;

@@ -1,6 +1,5 @@
 import './Avatar.scss';
 
-// TODO: try to remove undefined
 type AvatarProps = {
     src: string | null | undefined
 };

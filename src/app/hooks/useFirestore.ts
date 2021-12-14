@@ -5,7 +5,6 @@ import { fStore, fTimestamp } from 'app/firebase/config';
 
 type DocumentData = firebase.firestore.DocumentReference<firebase.firestore.DocumentData>;
 
-// TODO void???
 type FirestoreReducerState = {
     document: DocumentData | null | void,
     isPending: boolean,
@@ -62,7 +61,7 @@ const useFirestore = (collection: string): UseFirestoreStates => {
         dispatch(action);
     };
 
-    const addDocument = async (doc: any) => {
+    const addDocument = async (doc: unknown) => {
         dispatch({ type: 'IS_PENDING' })
 
         try {

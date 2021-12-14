@@ -1,11 +1,10 @@
 import useCollection from 'app/hooks/useCollection';
 import Avatar from 'app/components/Avatar/Avatar';
-import IUser from 'app/interface/users';
 
 import './OnlineUsers.scss';
 
 const OnlineUsers = (): JSX.Element => {
-    const { error, documents } = useCollection<IUser>('users');
+    const { error, documents } = useCollection('users');
 
     return (
         <div className="OnlineUsers">

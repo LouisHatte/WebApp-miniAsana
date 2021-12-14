@@ -5,10 +5,11 @@ import useAuthContext from 'app/hooks/useAuthContext';
 import { fTimestamp } from "app/firebase/config";
 import useFirestore from "app/hooks/useFirestore";
 import Avatar from "app/components/Avatar/Avatar";
-import IProject from "app/interface/projects";
+import { IFirestoreDocumentData } from 'app/interface/firestore';
+import { IComment } from "app/interface/projects";
 
 type ProjectCommentsProps = {
-    project: IProject
+    project: IFirestoreDocumentData
 };
 
 const ProjectComments = ({ project }: ProjectCommentsProps): JSX.Element => {
@@ -39,7 +40,7 @@ const ProjectComments = ({ project }: ProjectCommentsProps): JSX.Element => {
         <div className="ProjectComments">
             <h4>Project Comments</h4>
             <ul>
-                {project.comments.length > 0 && project.comments.map(comment => (
+                {project.comments.length > 0 && project.comments.map((comment: IComment) => (
                     <li key={comment.id}>
                         <div className="comment-author">
                             <Avatar src={comment.photoURL} />

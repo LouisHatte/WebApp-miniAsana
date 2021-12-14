@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 
 import { fStore } from 'app/firebase/config';
+import { IFirestoreDocumentData } from 'app/interface/firestore';
 
 type UseDocumentStates = {
-    document: any | null,
+    document: IFirestoreDocumentData | null,
     error: string | null
 };
 
-const useDocument = <Datatype>(collection: string, id?: string): UseDocumentStates => {
-    const [document, setDocument] = useState<any | null>(null);
+const useDocument = (collection: string, id?: string): UseDocumentStates => {
+    const [document, setDocument] = useState<IFirestoreDocumentData | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -22,7 +23,7 @@ const useDocument = <Datatype>(collection: string, id?: string): UseDocumentStat
                 setError('No such document exists');
             }
         }, error => {
-            console.log(error.message);
+            console.log(error);
             setError('Failed to get document');
         });
 

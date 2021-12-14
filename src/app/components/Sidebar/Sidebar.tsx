@@ -14,7 +14,6 @@ const Sidebar = (): JSX.Element => {
         <div className="Sidebar">
             <div className="sidebar-content">
                 <div className="user">
-                    {/* TODO remove ? */}
                     <Avatar src={user?.photoURL}/>
                     <p>Hey {user?.displayName}</p>
                 </div>

@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 
 import Avatar from 'app/components/Avatar/Avatar';
-import IProject from 'app/interface/projects';
+import { IFirestoreDocumentData } from 'app/interface/firestore';
 
 import './ProjectList.scss';
+import { IUserAssigned } from 'app/interface/projects';
 
 type ProjectListProps = {
-    projects: IProject[]
+    projects: IFirestoreDocumentData[]
 };
 
 const ProjectList = ({ projects }: ProjectListProps): JSX.Element => {
@@ -20,7 +21,7 @@ const ProjectList = ({ projects }: ProjectListProps): JSX.Element => {
                     <div className="assigned-to">
                         <p><strong>Assigned to:</strong></p>
                         <ul>
-                            {project.assignedUsersList.map(user => (
+                            {project.assignedUsersList.map((user: IUserAssigned) => (
                                 <li key={user.photoURL}>
                                     <div>
                                         <Avatar src={user.photoURL} />

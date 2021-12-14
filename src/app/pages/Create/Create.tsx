@@ -6,11 +6,28 @@ import { fTimestamp } from 'app/firebase/config';
 import useAuthContext from 'app/hooks/useAuthContext';
 import useCollection from 'app/hooks/useCollection';
 import useFirestore from 'app/hooks/useFirestore';
-import IUser from 'app/interface/users';
+import { IUserAssigned } from 'app/interface/projects';
 
 import './Create.scss';
 
-const categories = [
+type Category = {
+    label: string,
+    value: string
+}
+
+type AssignedUser = {
+    label: string,
+    value: IUserAssigned
+};
+
+// interface AssignedUserOptions extends IFirestoreDocumentData, IUserAssigned {};
+
+// type User = {
+//     label: string,
+//     value: AssignedUserOptions
+// };
+
+const categories: Category[] = [
     { value: 'development', label: 'Development' },
     { value: 'design', label: 'Design' },
     { value: 'sales', label: 'Sales' },
@@ -21,19 +38,29 @@ const Create = (): JSX.Element => {
     const [name, setName] = useState('');
     const [details, setDetails] = useState('');
     const [dueDate, setDueDate] = useState('');
-    const [category, setCategory] = useState<SingleValue<{ value: string; label: string; }>>(categories[0]);
-    const [assignedUsers, setAssignedUsers] = useState<MultiValue<any>>([]);
     const [formError, setFormError] = useState<string | null>(null);
-    const { documents } = useCollection<IUser>('users');
-    const [users, setUsers] = useState<any[]>([]);
-    const { user } = useAuthContext();
+
+    const [category, setCategory] = useState<SingleValue<Category>>(categories[0]);
+    const [assignedUsers, setAssignedUsers] = useState<MultiValue<AssignedUser>>([]);
+
+    const { documents } = useCollection('users');
+    const [users, setUsers] = useState<AssignedUser[]>([]);
+
     const { addDocument, response } = useFirestore('projects');
+
+    const { user } = useAuthContext();
+
     const navigate = useNavigate();
 
     useEffect(() => {
         if (!documents) return;
         const options = documents.map(user => {
-            return { value: user, label: user.displayName };
+            const u = {
+                id: user.id,
+                displayName: user.displayName,
+                photoURL: user.photoURL
+            };
+            return { value: u, label: user.displayName };
         });
         setUsers(options);
     }, [documents]);
@@ -42,15 +69,18 @@ const Create = (): JSX.Element => {
         e.preventDefault();
         setFormError(null);
 
+        if (!user) return;
+        if (!category) return;
+
         if (assignedUsers.length < 1) {
             setFormError('Please assign the project to at least 1 user');
             return;
         }
 
         const createdBy = {
-            displayName: user?.displayName,
-            photoURL: user?.photoURL,
-            id: user?.uid
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+            id: user.uid
         };
 
         const assignedUsersList = assignedUsers.map(user => {
@@ -64,7 +94,7 @@ const Create = (): JSX.Element => {
         const project = {
             name,
             details,
-            category: category?.value,
+            category: category.value,
             dueDate: fTimestamp.fromDate(new Date(dueDate)),
             comments: [],
             createdBy,
