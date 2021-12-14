@@ -1,0 +1,95 @@
+@use 'app/scss/colors';
+
+.Project {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    align-items: start;
+    grid-gap: 60px;
+}
+
+.ProjectSummary {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 4px;
+
+    .due-date {
+        margin: 10px 0;
+        font-size: 0.9em;
+        color: colors.$heading-color;
+    }
+
+    .details {
+        margin: 30px 0;
+        color: colors.$text-color;
+        line-height: 1.8em;
+        font-size: 0.9em;
+    }
+
+    .assigned-users {
+        display: flex;
+        margin-top: 20px;
+
+        .Avatar {
+            margin-right: 10px;
+        }
+    }
+
+    .btn {
+        margin-top: 20px;
+    }
+
+    h4 {
+        color: colors.$text-color;
+        font-size: 0.9em;
+    }
+}
+
+.ProjectComments {
+    label {
+        margin-bottom: 0px;
+    }
+
+    textarea {
+        min-height: 40px;
+        font-size: 1.5em;
+    }
+}
+
+/* comment list */
+.ProjectComments {
+    h4 {
+        color: colors.$heading-color;
+    }
+
+    li {
+        padding: 16px;
+        border-radius: 4px;
+        border: 1px solid #f2f2f2;
+        margin-top: 20px;
+        box-shadow: 3px 3px 5px rgba(0,0,0,0.05);
+        background: #fff;
+    }
+
+    .comment-author {
+        display: flex;
+        align-items: center;
+        color: colors.$heading-color;
+    }
+
+    .Avatar {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+    }
+
+    .comment-date {
+        color: colors.$text-color;
+        font-size: 0.9em;
+        margin: 4px 0 10px;
+    }
+
+    .comment-content {
+        color: colors.$text-color;
+        font-size: 0.9em;
+    }
+}

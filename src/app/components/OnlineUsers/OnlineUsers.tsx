@@ -1,5 +1,5 @@
 import { useCollection } from 'app/hooks/useCollection';
-import { Avatar } from 'app/components/Avatar/Avatar';
+import Avatar from 'app/components/Avatar/Avatar';
 
 import './OnlineUsers.scss';
 

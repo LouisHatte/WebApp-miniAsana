@@ -1,0 +1,39 @@
+@use 'app/scss/colors';
+@use 'app/scss/mixins';
+
+.ProjectFilter {
+    margin: 30px auto;
+
+    nav {
+        display: flex;
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 4px;
+    }
+
+    p {
+        font-size: 0.9em;
+        margin-right: 10px;
+    }
+
+    button {
+        background: transparent;
+        border: 0;
+        font-family: inherit;
+        font-weight: bold;
+        color: colors.$text-color;
+        cursor: pointer;
+        border-right: 1px solid #e4e4e4;
+        font-size: 0.9em;
+
+        &:last-child {
+            border: 0;
+        }
+    }
+
+    .active {
+        @include mixins.unify-parent("button") {
+            color: colors.$primary-color;
+        }
+    }
+}

@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-import { Avatar } from 'app/components/Avatar/Avatar';
+import Avatar from 'app/components/Avatar/Avatar';
 import { useAuthContext } from 'app/hooks/useAuthContext';
 
 import './Sidebar.scss';

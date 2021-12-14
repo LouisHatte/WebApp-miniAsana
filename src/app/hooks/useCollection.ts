@@ -14,7 +14,7 @@ interface OrderBy {
     directionStr?: firebase.firestore.OrderByDirection | undefined;
 }
 
-interface Document extends firebase.firestore.DocumentData {
+export interface Document extends firebase.firestore.DocumentData {
     id: string;
 }
 
