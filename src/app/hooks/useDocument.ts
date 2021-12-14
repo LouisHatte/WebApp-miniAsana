@@ -1,9 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 import { fStore } from 'app/firebase/config';
 
-export const useDocument = <T>(collection: string, id?: string): { document: T | null, error: string | null } => {
-    const [document, setDocument] = useState<T | null>(null);
+type UseDocumentStates = {
+    document: any | null,
+    error: string | null
+};
+
+const useDocument = <Datatype>(collection: string, id?: string): UseDocumentStates => {
+    const [document, setDocument] = useState<any | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -11,7 +16,7 @@ export const useDocument = <T>(collection: string, id?: string): { document: T |
 
         const unsub = ref.onSnapshot(snapshot => {
             if (snapshot.data()) {
-                // setDocument({ ...snapshot.data(), id: snapshot.id }); TODO
+                setDocument({ ...snapshot.data(), id: snapshot.id });
                 setError(null);
             } else {
                 setError('No such document exists');
@@ -26,3 +31,5 @@ export const useDocument = <T>(collection: string, id?: string): { document: T |
 
     return { document, error };
 };
+
+export default useDocument;

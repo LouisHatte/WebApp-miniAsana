@@ -1,19 +1,14 @@
-import { useCollection } from 'app/hooks/useCollection';
+import { useState } from 'react';
+
+import useCollection from 'app/hooks/useCollection';
 import ProjectList from 'app/components/ProjectList/ProjectList';
 import ProjectFilter from 'app/pages/Dashboard/ProjectFilter';
+import useAuthContext from 'app/hooks/useAuthContext';
+import IProject from 'app/interface/projects';
 
 import './Dashboard.scss';
-import { useState } from 'react';
-import { useAuthContext } from 'app/hooks/useAuthContext';
-import IProject from 'app/interfaces/projects';
 
-type AssignedUsersList = {
-    displayName: string,
-    id: string,
-    photoURL: string
-};
-
-export const Dashboard = (): JSX.Element => {
+const Dashboard = (): JSX.Element => {
     const { user } = useAuthContext();
     const { documents, error } = useCollection<IProject>('projects');
     const [currentFilter, setCurrentFilter] = useState<string>('all');
@@ -28,7 +23,7 @@ export const Dashboard = (): JSX.Element => {
             case 'all':
                 return true;
             case 'mine':
-                document.assignedUsersList.forEach((u: AssignedUsersList) => {
+                document.assignedUsersList.forEach((u: any) => {
                     if (user?.uid === u.id) {
                         assignedToMe = true;
                     }
@@ -58,3 +53,5 @@ export const Dashboard = (): JSX.Element => {
         </>
     );
 }
+
+export default Dashboard;

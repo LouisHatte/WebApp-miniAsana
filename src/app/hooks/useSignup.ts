@@ -1,22 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { fAuth, fStorage, fStore } from "app/firebase/config";
-import { useAuthContext } from "app/hooks/useAuthContext";
-import { AuthDispatch } from "app/contexts/AuthContext";
+import { fAuth, fStorage, fStore } from 'app/firebase/config';
+import useAuthContext from 'app/hooks/useAuthContext';
 
-interface UseSignup {
-    isPending: boolean;
-    error: string | null;
-    signup(email: string, password: string, displayName: string, thumbnail: File | null): Promise<void>;
-}
+type UseSignupStates = {
+    isPending: boolean,
+    error: string | null,
+    signup(email: string, password: string, displayName: string, thumbnail: File | null): Promise<void>
+};
 
-export const useSignup = (): UseSignup => {
-    const [isPending, setIsPending] = useState<boolean>(false);
-    const [isCancelled, setIsCancelled] = useState<boolean>(false);
+const useSignup = (): UseSignupStates => {
+    const [isPending, setIsPending] = useState(false);
+    const [isCancelled, setIsCancelled] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const { dispatch }: AuthDispatch = useAuthContext();
+    const { dispatch } = useAuthContext();
 
-    const signup = async (email: string, password: string, displayName: string, thumbnail: File | null): Promise<void> => {
+    const signup = async (email: string, password: string, displayName: string, thumbnail: File | null) => {
         setIsPending(true);
         setError(null);
 
@@ -62,3 +61,5 @@ export const useSignup = (): UseSignup => {
 
     return { isPending, error, signup };
 };
+
+export default useSignup;

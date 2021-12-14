@@ -1,15 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 
 import Avatar from 'app/components/Avatar/Avatar';
-import { useFirestore } from 'app/hooks/useFirestore';
-import { useAuthContext } from 'app/hooks/useAuthContext';
-import IProject from 'app/interfaces/projects';
+import useFirestore from 'app/hooks/useFirestore';
+import useAuthContext from 'app/hooks/useAuthContext';
+import IProject from 'app/interface/projects';
 
 type ProjectSummaryProps = {
     project: IProject
 };
 
-export const ProjectSummary = ({ project }: ProjectSummaryProps): JSX.Element => {
+const ProjectSummary = ({ project }: ProjectSummaryProps): JSX.Element => {
     const { deleteDocument } = useFirestore('projects');
     const { user } = useAuthContext();
     const navigate = useNavigate();
@@ -45,3 +45,5 @@ export const ProjectSummary = ({ project }: ProjectSummaryProps): JSX.Element =>
         </div>
     );
 };
+
+export default ProjectSummary;

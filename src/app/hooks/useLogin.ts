@@ -1,20 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { fAuth, fStore } from "app/firebase/config";
-import { useAuthContext } from "app/hooks/useAuthContext";
-import { AuthDispatch } from "app/contexts/AuthContext";
+import { fAuth, fStore } from 'app/firebase/config';
+import useAuthContext from 'app/hooks/useAuthContext';
 
-type State = {
+type UseLoginStates = {
     login: (email: string, password: string) => Promise<void>,
     isPending: boolean,
     error: string | null
 };
 
-export const useLogin = (): State => {
-    const [isPending, setIsPending] = useState<boolean>(false);
+const useLogin = (): UseLoginStates => {
+    const [isPending, setIsPending] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [isCancelled, setIsCancelled] = useState<boolean>(false);
-    const { dispatch }: AuthDispatch = useAuthContext();
+    const [isCancelled, setIsCancelled] = useState(false);
+    const { dispatch } = useAuthContext();
 
     const login = async (email: string, password: string) => {
         setIsPending(true);
@@ -48,3 +47,5 @@ export const useLogin = (): State => {
 
     return { login, isPending, error };
 };
+
+export default useLogin;

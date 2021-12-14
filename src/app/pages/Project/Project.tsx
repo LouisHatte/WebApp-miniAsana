@@ -1,13 +1,13 @@
 import { useParams } from 'react-router-dom';
 
-import { useDocument } from 'app/hooks/useDocument';
-import { ProjectSummary } from 'app/pages/Project/ProjectSummary';
-import { ProjectComments } from 'app/pages/Project/ProjectComments';
+import useDocument from 'app/hooks/useDocument';
+import ProjectSummary from 'app/pages/Project/ProjectSummary';
+import ProjectComments from 'app/pages/Project/ProjectComments';
+import IProject from 'app/interface/projects';
 
 import './Project.scss';
-import IProject from 'app/interfaces/projects';
 
-export const Project = (): JSX.Element => {
+const Project = (): JSX.Element => {
     const { id } = useParams();
     const { error, document } = useDocument<IProject>('projects', id);
 
@@ -26,3 +26,5 @@ export const Project = (): JSX.Element => {
         </div>
     );
 };
+
+export default Project;

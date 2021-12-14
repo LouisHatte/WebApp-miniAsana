@@ -1,26 +1,17 @@
 import { useState } from "react";
-import firebase from 'firebase/app';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
-import { useAuthContext } from 'app/hooks/useAuthContext';
+import useAuthContext from 'app/hooks/useAuthContext';
 import { fTimestamp } from "app/firebase/config";
-import { useFirestore } from "app/hooks/useFirestore";
-import { Document } from 'app/hooks/useCollection';
+import useFirestore from "app/hooks/useFirestore";
 import Avatar from "app/components/Avatar/Avatar";
-
-interface Comment {
-    id: number;
-    displayName: string;
-    photoURL: string;
-    content: string;
-    createdAt: firebase.firestore.Timestamp;
-}
+import IProject from "app/interface/projects";
 
 type ProjectCommentsProps = {
-    project: Document
+    project: IProject
 };
 
-export const ProjectComments = ({ project }: ProjectCommentsProps): JSX.Element => {
+const ProjectComments = ({ project }: ProjectCommentsProps): JSX.Element => {
     const [newComment, setNewComment] = useState<string>('');
     const { user } = useAuthContext();
     const { updateDocument, response } = useFirestore('projects');
@@ -48,7 +39,7 @@ export const ProjectComments = ({ project }: ProjectCommentsProps): JSX.Element 
         <div className="ProjectComments">
             <h4>Project Comments</h4>
             <ul>
-                {project.comments.length > 0 && project.comments.map((comment: Comment) => (
+                {project.comments.length > 0 && project.comments.map(comment => (
                     <li key={comment.id}>
                         <div className="comment-author">
                             <Avatar src={comment.photoURL} />
@@ -77,3 +68,5 @@ export const ProjectComments = ({ project }: ProjectCommentsProps): JSX.Element 
         </div>
     );
 };
+
+export default ProjectComments;

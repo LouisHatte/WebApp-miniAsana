@@ -1,39 +1,19 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from 'react';
 import firebase from 'firebase/app';
 
-import { fStore } from "app/firebase/config";
+import { fStore } from 'app/firebase/config';
 
-interface Query {
-    fieldPath: string | firebase.firestore.FieldPath;
-    opStr: firebase.firestore.WhereFilterOp;
-    value: unknown;
-}
+type UseCollectionStates = {
+    documents: any[] | null,
+    error: string | null
+};
 
-interface OrderBy {
-    fieldPath: string | firebase.firestore.FieldPath;
-    directionStr?: firebase.firestore.OrderByDirection | undefined;
-}
-
-export interface Document extends firebase.firestore.DocumentData {
-    id: string;
-}
-
-export const useCollection = <T>(collection: string, _query?: Query, _orderBy?: OrderBy): { documents: T[] | null, error: string | null} => {
-    const [documents, setDocuments] = useState<T[] | null>(null);
+const useCollection = <DataType>(collection: string): UseCollectionStates => {
+    const [documents, setDocuments] = useState<any[] | null>(null);
     const [error, setError] = useState<string | null>(null);
 
-    const query = useRef(_query).current;
-    const orderBy = useRef(_orderBy).current;
-
     useEffect(() => {
-        let ref: firebase.firestore.Query<firebase.firestore.DocumentData> = fStore.collection(collection);
-
-        if (query) {
-            ref = ref.where(query.fieldPath, query.opStr, query.value);
-        }
-        if (orderBy) {
-            ref = ref.orderBy(orderBy.fieldPath, orderBy.directionStr);
-        }
+        const ref: firebase.firestore.Query<firebase.firestore.DocumentData> = fStore.collection(collection);
 
         const unsub = ref.onSnapshot(snapshot => {
             const results: any[] = [];
@@ -54,3 +34,5 @@ export const useCollection = <T>(collection: string, _query?: Query, _orderBy?: 
 
     return { documents, error };
 };
+
+export default useCollection;

@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
-import { useSignup } from 'app/hooks/useSignup';
+import useSignup from 'app/hooks/useSignup';
 
 import './Signup.scss';
 
-export const Signup = (): JSX.Element => {
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-    const [displayName, setDisplayname] = useState<string>('');
+const Signup = (): JSX.Element => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [displayName, setDisplayname] = useState('');
     const [thumbnail, setThumbnail] = useState<File | null>(null);
     const [thumbnailError, setThumbnailError] = useState<string | null>(null);
     const { signup, isPending, error } = useSignup();
@@ -82,4 +82,6 @@ export const Signup = (): JSX.Element => {
             {error && <div className="error">{error}</div>}
         </form>
     );
-}
+};
+
+export default Signup;

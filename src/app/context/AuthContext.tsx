@@ -3,27 +3,25 @@ import firebase from 'firebase/app';
 
 import { fAuth } from "app/firebase/config";
 
-interface AuthState {
-    user: firebase.User | null;
-    authIsReady: boolean;
-}
+type AuthReducerState = {
+    user: firebase.User | null,
+    authIsReady: boolean
+};
 
-export type AuthAction =
+type AuthReducerAction =
     { type: 'LOGIN', payload: firebase.User | null } |
     { type: 'LOGOUT' } |
     { type: 'AUTH_IS_READY', payload: firebase.User | null };
 
-export interface AuthDispatch {
-    dispatch: React.Dispatch<AuthAction>;
+export interface IAuthContext extends AuthReducerState {
+    dispatch: React.Dispatch<AuthReducerAction>;
 }
-
-export interface AuthContextInterface extends AuthState, AuthDispatch {}
 
 type AuthContextProviderProps = {
     children: React.ReactNode
 };
 
-const authReducer = (state: AuthState, action: AuthAction) => {
+const authReducer = (state: AuthReducerState, action: AuthReducerAction) => {
     switch (action.type) {
         case 'LOGIN':
             return { ...state, user: action.payload };
@@ -32,18 +30,18 @@ const authReducer = (state: AuthState, action: AuthAction) => {
         case 'AUTH_IS_READY':
             return { user: action.payload, authIsReady: true };
         default:
-            throw new Error('Auth dispatcher action type not defined');
+            return state
     }
 };
 
-const authState: AuthState = {
+const authState = {
     user: null,
     authIsReady: false,
 };
 
-export const AuthContext = createContext<AuthContextInterface | null>(null);
+export const AuthContext = createContext<IAuthContext | null>(null);
 
-export const AuthContextProvider = ({ children }: AuthContextProviderProps): JSX.Element => {
+const AuthContextProvider = ({ children }: AuthContextProviderProps): JSX.Element => {
     const [state, dispatch] = useReducer(authReducer, authState);
 
     useEffect(() => {
@@ -59,3 +57,5 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps): JSX
         </AuthContext.Provider>
     );
 };
+
+export default AuthContextProvider;

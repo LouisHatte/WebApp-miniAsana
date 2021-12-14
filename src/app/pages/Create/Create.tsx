@@ -3,22 +3,12 @@ import Select, { MultiValue, SingleValue } from 'react-select';
 import { useNavigate } from 'react-router-dom';
 
 import { fTimestamp } from 'app/firebase/config';
-import { useAuthContext } from 'app/hooks/useAuthContext';
-import { Document, useCollection } from 'app/hooks/useCollection';
-import { useFirestore } from 'app/hooks/useFirestore';
+import useAuthContext from 'app/hooks/useAuthContext';
+import useCollection from 'app/hooks/useCollection';
+import useFirestore from 'app/hooks/useFirestore';
+import IUser from 'app/interface/users';
 
 import './Create.scss';
-import IUser from 'app/interfaces/users';
-
-type Option = {
-    value: string,
-    label: string
-};
-
-type User = {
-    value: Document,
-    label: string
-};
 
 const categories = [
     { value: 'development', label: 'Development' },
@@ -27,21 +17,17 @@ const categories = [
     { value: 'marketing', label: 'Marketing' }
 ];
 
-export const Create = (): JSX.Element => {
-    const [name, setName] = useState<string>('');
-    const [details, setDetails] = useState<string>('');
-    const [dueDate, setDueDate] = useState<string>('');
-    const [category, setCategory] = useState<SingleValue<Option>>(categories[0]);
-    const [assignedUsers, setAssignedUsers] = useState<MultiValue<User>>([]);
+const Create = (): JSX.Element => {
+    const [name, setName] = useState('');
+    const [details, setDetails] = useState('');
+    const [dueDate, setDueDate] = useState('');
+    const [category, setCategory] = useState<SingleValue<{ value: string; label: string; }>>(categories[0]);
+    const [assignedUsers, setAssignedUsers] = useState<MultiValue<any>>([]);
     const [formError, setFormError] = useState<string | null>(null);
-
     const { documents } = useCollection<IUser>('users');
-    const [users, setUsers] = useState<User[]>([]);
-
+    const [users, setUsers] = useState<any[]>([]);
     const { user } = useAuthContext();
-
     const { addDocument, response } = useFirestore('projects');
-
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -142,3 +128,5 @@ export const Create = (): JSX.Element => {
         </div>
     );
 };
+
+export default Create;

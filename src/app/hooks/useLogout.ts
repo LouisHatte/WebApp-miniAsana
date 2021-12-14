@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { fAuth, fStore } from "app/firebase/config";
-import { useAuthContext } from "app/hooks/useAuthContext";
+import { fAuth, fStore } from 'app/firebase/config';
+import useAuthContext from 'app/hooks/useAuthContext';
 
-type State = {
+type UseLogoutStates = {
     logout: () => Promise<void>,
     isPending: boolean,
     error: string | null
 };
 
-export const useLogout = (): State => {
-    const [isPending, setIsPending] = useState<boolean>(false);
+const useLogout = (): UseLogoutStates => {
+    const [isPending, setIsPending] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [isCancelled, setIsCancelled] = useState<boolean>(false);
+    const [isCancelled, setIsCancelled] = useState(false);
     const { dispatch, user } = useAuthContext();
 
     const logout = async () => {
@@ -45,3 +45,5 @@ export const useLogout = (): State => {
 
     return { logout, isPending, error };
 };
+
+export default useLogout;

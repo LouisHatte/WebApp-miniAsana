@@ -1,43 +1,33 @@
-import React, { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from 'react';
 import firebase from 'firebase/app';
 
-import { fStore, fTimestamp } from "app/firebase/config";
+import { fStore, fTimestamp } from 'app/firebase/config';
 
 type DocumentData = firebase.firestore.DocumentReference<firebase.firestore.DocumentData>;
 
-interface FirestoreState {
-    document: DocumentData | null | void;
-    isPending: boolean;
-    error: string | null;
-    success: boolean | null;
-}
+// TODO void???
+type FirestoreReducerState = {
+    document: DocumentData | null | void,
+    isPending: boolean,
+    error: string | null,
+    success: boolean | null
+};
 
-type FirestoreAction =
+type FirestoreReducerAction =
     { type: 'IS_PENDING' } |
     { type: 'ADDED_DOCUMENT', payload: DocumentData } |
     { type: 'DELETED_DOCUMENT' } |
     { type: 'UPDATED_DOCUMENT', payload: void } |
     { type: 'ERROR', payload: string };
 
-export interface FirestoreDispatch {
-    dispatch: React.Dispatch<FirestoreAction>
-}
-
-type State = {
+type UseFirestoreStates = {
     addDocument: (doc: unknown) => Promise<void>,
     deleteDocument: (id: string) => Promise<void>,
     updateDocument: (id: string, updates: firebase.firestore.UpdateData) => Promise<void>,
-    response: FirestoreState
+    response: FirestoreReducerState
 };
 
-const firestoreState: FirestoreState = {
-    document: null,
-    isPending: false,
-    error: null,
-    success: null
-};
-
-const firestoreReducer = (state: FirestoreState, action: FirestoreAction): FirestoreState => {
+const firestoreReducer = (state: FirestoreReducerState, action: FirestoreReducerAction) => {
     switch (action.type) {
         case 'IS_PENDING':
             return { isPending: true, document: null, success: false, error: null };
@@ -50,22 +40,29 @@ const firestoreReducer = (state: FirestoreState, action: FirestoreAction): Fires
         case 'ERROR':
             return { isPending: false, document: null, success: false, error: action.payload };
         default:
-            throw new Error('Firestore dispatcher action type not defined');
+            return state
     }
 };
 
-export const useFirestore = (collection: string): State => {
+const firestoreState = {
+    document: null,
+    isPending: false,
+    error: null,
+    success: null
+};
+
+const useFirestore = (collection: string): UseFirestoreStates => {
     const [response, dispatch] = useReducer(firestoreReducer, firestoreState);
-    const [isCancelled, setIsCancelled] = useState<boolean>(false);
+    const [isCancelled, setIsCancelled] = useState(false);
 
     const ref = fStore.collection(collection);
 
-    const dispatchIfNotCancelled = (action: FirestoreAction): void => {
+    const dispatchIfNotCancelled = (action: FirestoreReducerAction) => {
         if (isCancelled) return;
         dispatch(action);
     };
 
-    const addDocument = async (doc: unknown) => {
+    const addDocument = async (doc: any) => {
         dispatch({ type: 'IS_PENDING' })
 
         try {
@@ -114,3 +111,5 @@ export const useFirestore = (collection: string): State => {
 
     return { addDocument, deleteDocument, updateDocument, response };
 };
+
+export default useFirestore;

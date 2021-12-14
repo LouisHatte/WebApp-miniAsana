@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import Avatar from 'app/components/Avatar/Avatar';
-import IProject from 'app/interfaces/projects';
+import IProject from 'app/interface/projects';
 
 import './ProjectList.scss';
 

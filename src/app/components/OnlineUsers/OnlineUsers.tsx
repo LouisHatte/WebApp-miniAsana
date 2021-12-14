@@ -1,6 +1,6 @@
-import { useCollection } from 'app/hooks/useCollection';
+import useCollection from 'app/hooks/useCollection';
 import Avatar from 'app/components/Avatar/Avatar';
-import IUser from 'app/interfaces/users';
+import IUser from 'app/interface/users';
 
 import './OnlineUsers.scss';
 

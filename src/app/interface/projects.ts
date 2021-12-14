@@ -13,7 +13,7 @@ interface IComment {
     displayName: string;
     photoURL: string;
     content: string;
-    createdAt: string;
+    createdAt: firebase.firestore.Timestamp;
 }
 
 

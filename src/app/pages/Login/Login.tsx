@@ -1,17 +1,18 @@
-import { useLogin } from 'app/hooks/useLogin';
 import { useState } from 'react';
+
+import useLogin from 'app/hooks/useLogin';
 
 import './Login.scss';
 
-export const Login = (): JSX.Element => {
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+const Login = (): JSX.Element => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const { login, isPending, error } = useLogin();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         login(email, password);
-    }
+    };
 
     return (
         <form className="Login" onSubmit={handleSubmit}>
@@ -39,4 +40,6 @@ export const Login = (): JSX.Element => {
             {error && <div className="error">{error}</div>}
         </form>
     );
-}
+};
+
+export default Login;
