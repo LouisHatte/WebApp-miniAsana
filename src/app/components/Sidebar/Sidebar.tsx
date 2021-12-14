@@ -7,13 +7,14 @@ import './Sidebar.scss';
 import DashboardIcon from 'app/assets/dashboard_icon.svg';
 import AddIcon from 'app/assets/add_icon.svg';
 
-export const Sidebar = (): JSX.Element => {
+const Sidebar = (): JSX.Element => {
     const { user } = useAuthContext();
 
     return (
         <div className="Sidebar">
             <div className="sidebar-content">
                 <div className="user">
+                    {/* TODO remove ? */}
                     <Avatar src={user?.photoURL}/>
                     <p>Hey {user?.displayName}</p>
                 </div>
@@ -37,3 +38,5 @@ export const Sidebar = (): JSX.Element => {
         </div>
     );
 };
+
+export default Sidebar;

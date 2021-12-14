@@ -18,13 +18,8 @@ export interface Document extends firebase.firestore.DocumentData {
     id: string;
 }
 
-type State = {
-    documents: Document[] | null,
-    error: string | null
-};
-
-export const useCollection = (collection: string, _query?: Query, _orderBy?: OrderBy): State => {
-    const [documents, setDocuments] = useState<Document[] | null>(null);
+export const useCollection = <T>(collection: string, _query?: Query, _orderBy?: OrderBy): { documents: T[] | null, error: string | null} => {
+    const [documents, setDocuments] = useState<T[] | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     const query = useRef(_query).current;
@@ -41,10 +36,10 @@ export const useCollection = (collection: string, _query?: Query, _orderBy?: Ord
         }
 
         const unsub = ref.onSnapshot(snapshot => {
-            const results: Document[] = [];
+            const results: any[] = [];
             snapshot.docs.forEach(doc => {
                 doc.data()
-                results.push({ ...doc.data(), id: doc.id });
+                results.push({ ...doc.data(), id: doc.id }); // TODO
             });
 
             setDocuments(results);

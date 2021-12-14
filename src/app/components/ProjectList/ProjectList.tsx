@@ -1,21 +1,15 @@
-import { Document } from 'app/hooks/useCollection';
 import { Link } from 'react-router-dom';
 
 import Avatar from 'app/components/Avatar/Avatar';
+import IProject from 'app/interfaces/projects';
 
 import './ProjectList.scss';
 
-export interface User {
-    id: string;
-    displayName: string;
-    photoURL: string;
-}
-
 type ProjectListProps = {
-    projects: Document[]
+    projects: IProject[]
 };
 
-export const ProjectList = ({ projects }: ProjectListProps): JSX.Element => {
+const ProjectList = ({ projects }: ProjectListProps): JSX.Element => {
     return (
         <div className="ProjectList">
             {projects.length === 0 && <p>No projects yet!</p>}
@@ -26,7 +20,7 @@ export const ProjectList = ({ projects }: ProjectListProps): JSX.Element => {
                     <div className="assigned-to">
                         <p><strong>Assigned to:</strong></p>
                         <ul>
-                            {project.assignedUsersList.map((user: User) => (
+                            {project.assignedUsersList.map(user => (
                                 <li key={user.photoURL}>
                                     <div>
                                         <Avatar src={user.photoURL} />
@@ -40,3 +34,5 @@ export const ProjectList = ({ projects }: ProjectListProps): JSX.Element => {
         </div>
     );
 };
+
+export default ProjectList;

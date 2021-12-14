@@ -10,6 +10,11 @@
     position: relative;
     color: #fff;
 
+    .sidebar-content {
+        position: fixed;
+        width: inherit;
+    }
+
     .user {
         font-weight: bold;
         text-align: center;
@@ -52,9 +57,4 @@
             }
         }
     }
-}
-
-.sidebar-content {
-    position: fixed;
-    width: inherit;
 }

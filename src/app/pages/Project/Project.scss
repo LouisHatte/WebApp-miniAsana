@@ -7,43 +7,6 @@
     grid-gap: 60px;
 }
 
-.ProjectSummary {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 4px;
-
-    .due-date {
-        margin: 10px 0;
-        font-size: 0.9em;
-        color: colors.$heading-color;
-    }
-
-    .details {
-        margin: 30px 0;
-        color: colors.$text-color;
-        line-height: 1.8em;
-        font-size: 0.9em;
-    }
-
-    .assigned-users {
-        display: flex;
-        margin-top: 20px;
-
-        .Avatar {
-            margin-right: 10px;
-        }
-    }
-
-    .btn {
-        margin-top: 20px;
-    }
-
-    h4 {
-        color: colors.$text-color;
-        font-size: 0.9em;
-    }
-}
-
 .ProjectComments {
     label {
         margin-bottom: 0px;
@@ -53,10 +16,7 @@
         min-height: 40px;
         font-size: 1.5em;
     }
-}
 
-/* comment list */
-.ProjectComments {
     h4 {
         color: colors.$heading-color;
     }
@@ -89,6 +49,43 @@
     }
 
     .comment-content {
+        color: colors.$text-color;
+        font-size: 0.9em;
+    }
+}
+
+.ProjectSummary {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 4px;
+
+    .due-date {
+        margin: 10px 0;
+        font-size: 0.9em;
+        color: colors.$heading-color;
+    }
+
+    .details {
+        margin: 30px 0;
+        color: colors.$text-color;
+        line-height: 1.8em;
+        font-size: 0.9em;
+    }
+
+    .assigned-users {
+        display: flex;
+        margin-top: 20px;
+
+        .Avatar {
+            margin-right: 10px;
+        }
+    }
+
+    .btn {
+        margin-top: 20px;
+    }
+
+    h4 {
         color: colors.$text-color;
         font-size: 0.9em;
     }

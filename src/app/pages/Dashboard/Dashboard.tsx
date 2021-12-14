@@ -1,10 +1,11 @@
 import { useCollection } from 'app/hooks/useCollection';
-import { ProjectList } from 'app/components/ProjectList/ProjectList';
+import ProjectList from 'app/components/ProjectList/ProjectList';
 import ProjectFilter from 'app/pages/Dashboard/ProjectFilter';
 
 import './Dashboard.scss';
 import { useState } from 'react';
 import { useAuthContext } from 'app/hooks/useAuthContext';
+import IProject from 'app/interfaces/projects';
 
 type AssignedUsersList = {
     displayName: string,
@@ -14,7 +15,7 @@ type AssignedUsersList = {
 
 export const Dashboard = (): JSX.Element => {
     const { user } = useAuthContext();
-    const { documents, error } = useCollection('projects');
+    const { documents, error } = useCollection<IProject>('projects');
     const [currentFilter, setCurrentFilter] = useState<string>('all');
 
     const changeFilter = (newFilter: string) => {
@@ -37,7 +38,6 @@ export const Dashboard = (): JSX.Element => {
             case 'design':
             case 'sales':
             case 'marketing':
-                console.log(document.category, currentFilter);
                 return document.category === currentFilter;
             default:
                 return true;
@@ -45,7 +45,7 @@ export const Dashboard = (): JSX.Element => {
     }) : null;
 
     return (
-        <div>
+        <>
             <h2 className="page-title">Dashboard</h2>
             {error && <p className="error">{error}</p>}
             {documents && (
@@ -55,6 +55,6 @@ export const Dashboard = (): JSX.Element => {
                 />
             )}
             {projects && <ProjectList projects={projects}/>}
-        </div>
+        </>
     );
 }

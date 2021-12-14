@@ -8,6 +8,7 @@ import { Document, useCollection } from 'app/hooks/useCollection';
 import { useFirestore } from 'app/hooks/useFirestore';
 
 import './Create.scss';
+import IUser from 'app/interfaces/users';
 
 type Option = {
     value: string,
@@ -34,7 +35,7 @@ export const Create = (): JSX.Element => {
     const [assignedUsers, setAssignedUsers] = useState<MultiValue<User>>([]);
     const [formError, setFormError] = useState<string | null>(null);
 
-    const { documents } = useCollection('users');
+    const { documents } = useCollection<IUser>('users');
     const [users, setUsers] = useState<User[]>([]);
 
     const { user } = useAuthContext();

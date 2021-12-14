@@ -6,7 +6,7 @@ import { useAuthContext } from 'app/hooks/useAuthContext';
 import './Navbar.scss';
 import Temple from 'app/assets/temple.svg';
 
-export const Navbar = (): JSX.Element => {
+const Navbar = (): JSX.Element => {
     const { logout, isPending } = useLogout();
     const { user } = useAuthContext();
 
@@ -33,3 +33,5 @@ export const Navbar = (): JSX.Element => {
         </div>
     );
 };
+
+export default Navbar;

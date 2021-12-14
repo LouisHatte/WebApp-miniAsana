@@ -1,13 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 
 import Avatar from 'app/components/Avatar/Avatar';
-import { Document } from 'app/hooks/useCollection';
-import { User } from 'app/components/ProjectList/ProjectList';
 import { useFirestore } from 'app/hooks/useFirestore';
 import { useAuthContext } from 'app/hooks/useAuthContext';
+import IProject from 'app/interfaces/projects';
 
 type ProjectSummaryProps = {
-    project: Document
+    project: IProject
 };
 
 export const ProjectSummary = ({ project }: ProjectSummaryProps): JSX.Element => {
@@ -33,7 +32,7 @@ export const ProjectSummary = ({ project }: ProjectSummaryProps): JSX.Element =>
                 </p>
                 <h4>Project is assigned to:</h4>
                 <div className="assigned-users">
-                    {project.assignedUsersList.map((user: User) => (
+                    {project.assignedUsersList.map(user => (
                         <div key={user.id}>
                             <Avatar src={user.photoURL} />
                         </div>

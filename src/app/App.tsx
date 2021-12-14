@@ -1,14 +1,14 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-import { Dashboard } from './pages/Dashboard/Dashboard';
-import { Signup } from './pages/Signup/Signup';
-import { Create } from './pages/Create/Create';
-import { Project } from './pages/Project/Project';
-import { Login } from './pages/Login/Login';
-import { Navbar } from './components/Navbar/Navbar';
-import { Sidebar } from './components/Sidebar/Sidebar';
-import { useAuthContext } from './hooks/useAuthContext';
-import { OnlineUsers } from './components/OnlineUsers/OnlineUsers';
+import { Dashboard } from 'app/pages/Dashboard/Dashboard';
+import { Signup } from 'app/pages/Signup/Signup';
+import { Create } from 'app/pages/Create/Create';
+import { Project } from 'app/pages/Project/Project';
+import { Login } from 'app/pages/Login/Login';
+import Navbar from 'app/components/Navbar/Navbar';
+import Sidebar from 'app/components/Sidebar/Sidebar';
+import { useAuthContext } from 'app/hooks/useAuthContext';
+import OnlineUsers from 'app/components/OnlineUsers/OnlineUsers';
 
 import './App.scss';
 

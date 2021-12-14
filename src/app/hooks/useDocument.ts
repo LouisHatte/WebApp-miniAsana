@@ -1,15 +1,9 @@
 import { useEffect, useState } from "react";
 
 import { fStore } from 'app/firebase/config';
-import { Document } from 'app/hooks/useCollection';
 
-type State = {
-    document: Document | null,
-    error: string | null
-};
-
-export const useDocument = (collection: string, id?: string): State => {
-    const [document, setDocument] = useState<Document | null>(null);
+export const useDocument = <T>(collection: string, id?: string): { document: T | null, error: string | null } => {
+    const [document, setDocument] = useState<T | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -17,7 +11,7 @@ export const useDocument = (collection: string, id?: string): State => {
 
         const unsub = ref.onSnapshot(snapshot => {
             if (snapshot.data()) {
-                setDocument({ ...snapshot.data(), id: snapshot.id });
+                // setDocument({ ...snapshot.data(), id: snapshot.id }); TODO
                 setError(null);
             } else {
                 setError('No such document exists');
