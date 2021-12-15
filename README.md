@@ -1,46 +1,41 @@
-# Getting Started with Create React App
+# Mini Asana
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+MiniAsana is a **React** project using **hooks** with **Typescript** and working with **firebase 8.5**. You can signup, login, logout with an email/password thanks to the firebase **Authentication** service. **SCSS** has been used to style the application.
 
-In the project directory, you can run:
+Once you are logged in with an user account, you have access to a dashboard where you can see all the current projects created by all the different users. You can filter these projects dependeing on some parameters. You can also see all the users and if they are online and manage your own projects. Furthermore any user can comment any current project.
 
-### `yarn start`
+Everything is stored with the **Firestore** and the **Storage** services of Firebase.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The project is online and hosted at this url:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+https://mini-asana.web.app/
 
-### `yarn test`
+## Run the project locally
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To run the project locally,
+clone the repository :
+```
+git clone git@github.com:LouisHatte/WebApp-miniAsana.git
+```
+Open the project with an IDE like Visual Studio Code.
 
-### `yarn build`
+Open a termial and make sure to be at the root of the project (where you can find the README.md file).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Make sure to have the package manager `yarn` on your system or install it like so:
+```
+npm install -g yarn
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Run the command :
+```
+yarn install
+```
+to install all the dependencies needed.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Once you are done with that, you can start the project by running the command :
+```
+yarn start
+```
+Then, open a browser like Brave and the project should be running on the url http://localhost:3000 by default.
