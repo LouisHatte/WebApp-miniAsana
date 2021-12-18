@@ -33,8 +33,6 @@ const Dashboard = (): JSX.Element => {
             case 'design':
             case 'sales':
             case 'marketing':
-                console.log(currentFilter);
-                console.log(document);
                 return document.category === currentFilter;
             default:
                 return true;
